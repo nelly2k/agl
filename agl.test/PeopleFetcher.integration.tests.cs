@@ -6,15 +6,15 @@ namespace agl.test
 {
     public class PeopleFetcherIntegrationTests
     {
-        PeopleFetcher peopleFetcher;
+        private readonly PeopleFetcher _peopleFetcher;
         public PeopleFetcherIntegrationTests()
         {
-            peopleFetcher = new PeopleFetcher();
+            _peopleFetcher = new PeopleFetcher();
         }
 
         [Fact]
         public async Task Fetches_Data(){
-            var result = await peopleFetcher.Execute();
+            var result = await _peopleFetcher.Execute("http://agl-developer-test.azurewebsites.net/people.json");
             Assert.NotEmpty(result);
         }
     }

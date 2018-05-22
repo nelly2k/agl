@@ -3,26 +3,29 @@ using System.Linq;
 
 namespace agl.app
 {
-    public class CatGenderBuilder
+    public class CatGenderBuilder : ICatGenderBuilder
     {
-        public Dictionary<string, IEnumerable<string>> Execute(IEnumerable<Human> humans)
+        public Dictionary<string, IEnumerable<string>> Execute(IEnumerable<Person> people)
         {
             var result = new Dictionary<string, IEnumerable<string>>();
 
-            foreach (var human in humans)
+            foreach (var person in people)
             {
-                var petNames = human.Pets?.Where(x => x.Type == "Cat").Select(x => x.Name);
+                var petNames = person.Pets?
+                    .Where(x => x.Type == "Cat").Select(x => x.Name)
+                    .ToList();
+
                 if (petNames == null || !petNames.Any())
                 {
                     continue;
                 }
-                if (!result.ContainsKey(human.Gender))
+                if (!result.ContainsKey(person.Gender))
                 {
-                    result.Add(human.Gender, petNames.OrderBy(x => x));
+                    result.Add(person.Gender, petNames.OrderBy(x => x));
                 }
                 else
                 {
-                    result[human.Gender] = result[human.Gender].Concat(petNames).OrderBy(x => x);
+                    result[person.Gender] = result[person.Gender].Concat(petNames).OrderBy(x => x);
                 }
 
             }

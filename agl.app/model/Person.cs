@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace agl.app
 {
-    public class Human
+    public class Person
     {
         public string Name { get; set; }
         public string Gender { get; set; }

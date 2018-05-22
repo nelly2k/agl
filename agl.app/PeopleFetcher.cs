@@ -2,15 +2,17 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace agl.app{
-    
-    public  class PeopleFetcher{
-        public async Task<ICollection<Human>> Execute(){
-
-            using(var client = new HttpClient()){
-                var response = await client.GetAsync("http://agl-developer-test.azurewebsites.net/people.json");
+namespace agl.app
+{
+    public class PeopleFetcher : IPeopleFetcher
+    {
+        public async Task<ICollection<Person>> Execute(string connectionString)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync(connectionString);
                 response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsAsync<ICollection<Human>>();
+                return await response.Content.ReadAsAsync<ICollection<Person>>();
             }
         }
     }
